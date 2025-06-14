@@ -3,6 +3,8 @@ import org.openqa.selenium.chrome.*;
 import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
+import java.util.logging.Logger;
+
 import page.*;
 
 public class GrabFoodOrderTest {
@@ -14,6 +16,8 @@ public class GrabFoodOrderTest {
     private static RestaurantPage restaurantPage;
     private static CartPage cartPage;
     private static CheckoutPage checkoutPage;
+
+    private static final Logger logger = LoggerHelper.getLogger();
 
     static {
         setup();
@@ -30,18 +34,37 @@ public class GrabFoodOrderTest {
     }
 
     private static void happycase() throws InterruptedException {
+        logger.info("Start Happy Case Test : new user, success order");
         accessWebsite("http://localhost:3000");
+
+        logger.info("Registering user...");
         registerPage.registerRandomUser();
+
+        logger.info("Logging in...");
         loginPage.login("011223344", "Ransomeware");
+
+        logger.info("Selecting first restaurant...");
         homePage.selectFirstRestaurant();
+
+        logger.info("Adding item to cart...");
         restaurantPage.addPhoBoToCart("Phở bò", 1);
+
+        logger.info("Verifying cart quantity...");
         cartPage.verifyQuantity("Phở bò", 1);
+
+        logger.info("Proceeding to checkout...");
         cartPage.checkout();
         Util.ignoreAlert(driver);
+
+        logger.info("Filling address...");
         checkoutPage.isCheckoutPage();
         checkoutPage.fillAddress("97 man thien");
+
+        logger.info("Placing order...");
         checkoutPage.placeOrder();
+
         Thread.sleep(5000);
+        logger.info("Test completed. Closing browser...");
         closeBrowser();
     }
 
