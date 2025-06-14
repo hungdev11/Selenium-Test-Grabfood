@@ -8,17 +8,29 @@ import page.*;
 public class GrabFoodOrderTest {
     private static WebDriver driver;
     private static WebDriverWait wait;
+    private static RegisterPage registerPage;
+    private static LoginPage loginPage;
+    private static HomePage homePage;
+    private static RestaurantPage restaurantPage;
+    private static CartPage cartPage;
+    private static CheckoutPage checkoutPage;
+
+    static {
+        setup();
+        registerPage = new RegisterPage(driver);
+        loginPage = new LoginPage(driver);
+        homePage = new HomePage(driver);
+        restaurantPage = new RestaurantPage(driver);
+        cartPage = new CartPage(driver);
+        checkoutPage = new CheckoutPage(driver);
+    }
 
     public static void main(String[] args) throws InterruptedException {
-        setup();
-        accessWebsite("http://localhost:3000");
-        var registerPage = new RegisterPage(driver);
-        var loginPage = new LoginPage(driver);
-        var homePage = new HomePage(driver);
-        var restaurantPage = new RestaurantPage(driver);
-        var cartPage = new CartPage(driver);
-        var checkoutPage = new CheckoutPage(driver);
+        happycase();
+    }
 
+    private static void happycase() throws InterruptedException {
+        accessWebsite("http://localhost:3000");
         registerPage.registerRandomUser();
         loginPage.login("011223344", "Ransomeware");
         homePage.selectFirstRestaurant();
@@ -30,7 +42,6 @@ public class GrabFoodOrderTest {
         checkoutPage.fillAddress("97 man thien");
         checkoutPage.placeOrder();
         Thread.sleep(5000);
-        // place order
         closeBrowser();
     }
 
