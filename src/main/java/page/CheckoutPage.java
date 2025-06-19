@@ -3,6 +3,7 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -65,4 +66,32 @@ public class CheckoutPage {
         placeOrderButton.click();
     }
 
+    public boolean isShippingAddressNotSelected() {
+        try {
+            WebElement chooseAddressDiv = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//*[normalize-space(text())='+ Chọn địa chỉ giao hàng']")
+            ));
+            return chooseAddressDiv.isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+    public boolean isShippingAddressSelected() {
+        try {
+            WebElement addressDetail = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//div[contains(@class, 'rounded-md') and .//p]")
+            ));
+            return addressDetail.isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
+    public void handleAddress(String address) throws InterruptedException {
+        Util.ignoreAlert(driver);
+        Util.ignoreAlert(driver);
+        if (isShippingAddressNotSelected()) {
+            fillAddress(address);
+        }
+    }
 }

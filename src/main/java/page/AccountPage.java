@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class AccountPage {
     private final WebDriver driver;
@@ -57,6 +58,39 @@ public class AccountPage {
             }
         } catch (Exception e) {
             System.out.println("❌ Lỗi khi thêm địa chỉ: " + e.getMessage());
+        }
+    }
+
+    public void deleteAllAddresses() {
+        // Click "Địa chỉ giao hàng" tab
+        WebElement addressTabButton = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//span[contains(text(),'Địa chỉ giao hàng')]")));
+        addressTabButton.click();
+        // Lặp tối đa 10 lần để tránh vòng lặp vô hạn
+        for (int i = 0; i < 10; i++) {
+            List<WebElement> deleteButtons = driver.findElements(
+                    By.xpath("//button[.//svg[contains(@class,'text-red-500')]]")
+            );
+
+            if (deleteButtons.isEmpty()) {
+                System.out.println("✅ Không còn địa chỉ nào để xóa.");
+                break;
+            }
+
+            // Click nút xóa đầu tiên
+            try {
+                WebElement firstDelete = deleteButtons.get(0);
+                wait.until(ExpectedConditions.elementToBeClickable(firstDelete)).click();
+
+                // Xử lý xác nhận alert (nếu có)
+                Util.ignoreAlert(driver);
+
+                // Đợi UI cập nhật (có thể cần chỉnh)
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                System.err.println("⚠️ Lỗi khi xóa địa chỉ: " + e.getMessage());
+                break;
+            }
         }
     }
 }
