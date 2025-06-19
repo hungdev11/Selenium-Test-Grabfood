@@ -17,8 +17,9 @@ public class RestaurantPage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
     }
 
-    public void addPhoBoToCart(String foodName, int quantity) {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(text(),'" + foodName + "')]"))).click();
+    public void addFoodToCart(String foodName, int quantity) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//h3[normalize-space(text())='" + foodName + "']")));
         WebElement plusBtn = driver.findElement(By.xpath("//button[contains(@class,'rounded-full') and text()='+']"));
         for (int i = 0; i < quantity; i++) {
             wait.until(ExpectedConditions.elementToBeClickable(plusBtn)).click();

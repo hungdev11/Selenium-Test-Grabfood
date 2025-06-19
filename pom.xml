@@ -19,6 +19,15 @@
             <artifactId>selenium-java</artifactId>
             <version>4.10.0</version>
         </dependency>
+
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.0</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -26,4 +35,14 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <plugins>
+            <!-- Surefire để chạy test -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>

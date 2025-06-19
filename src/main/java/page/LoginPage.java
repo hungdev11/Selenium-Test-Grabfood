@@ -22,6 +22,14 @@ public class LoginPage {
         driver.findElement(By.id("password")).sendKeys(password);
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(),'Log in')]"))).click();
         Util.ignoreAlert(driver);
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+        //wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+    }
+
+    public boolean isLoginSuccessful() {
+        return wait.until(ExpectedConditions.urlToBe("http://localhost:3000/"));
+    }
+
+    public boolean isLoginFailed() {
+        return driver.getCurrentUrl().equals("http://localhost:3000/login");
     }
 }

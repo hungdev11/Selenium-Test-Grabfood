@@ -17,7 +17,7 @@ public class HomePage {
     }
 
     public void selectFirstRestaurant() {
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(text(),'0Urban Flavor')]"))).click();
-        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/restaurant/1?lat=-1&lon=-1"));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(text(),'Urban Flavor')]"))).click();
+        wait.until(ExpectedConditions.urlToBe("http://localhost:3000/restaurant/7?lat=-1&lon=-1"));
     }
 }

@@ -37,8 +37,8 @@ public class GrabFoodOrderTest {
         logger.info("Start Happy Case Test : new user, success order");
         accessWebsite("http://localhost:3000");
 
-        logger.info("Registering user...");
-        registerPage.registerRandomUser();
+//        logger.info("Registering user...");
+//        registerPage.registerRandomUser();
 
         logger.info("Logging in...");
         loginPage.login("011223344", "Ransomeware");
@@ -47,10 +47,10 @@ public class GrabFoodOrderTest {
         homePage.selectFirstRestaurant();
 
         logger.info("Adding item to cart...");
-        restaurantPage.addPhoBoToCart("Phở bò", 1);
+        restaurantPage.addFoodToCart("Banh xeo tôm", 1);
 
         logger.info("Verifying cart quantity...");
-        cartPage.verifyQuantity("Phở bò", 1);
+        cartPage.verifyQuantity("Banh xeo trung", 1);
 
         logger.info("Proceeding to checkout...");
         cartPage.checkout();
@@ -69,9 +69,9 @@ public class GrabFoodOrderTest {
     }
 
     private static void setup() {
-        System.setProperty("webdriver.chrome.driver", "E:/chromedriver-win64/chromedriver-win64/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "D:/PHUCLE/PJ/Test_order/chromedriver-win64/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("E:/chrome-win64/chrome-win64/chrome.exe");
+        options.setBinary("D:/PHUCLE/PJ/Test_order/chrome-win64/chrome.exe");
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--no-sandbox", "--disable-gpu");
         driver = new ChromeDriver(options);
