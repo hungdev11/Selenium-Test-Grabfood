@@ -190,4 +190,57 @@ public class CheckoutPage {
             return false;
         }
     }
+
+    // Chọn phương thức thanh toán
+    public void selectMomoPaymentMethod() {
+        WebElement radio = wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.cssSelector("input[type='radio'][value='momo']")
+        ));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", radio);
+    }
+
+    // Nhấn nút Đặt đơn
+    public void clickPlaceOrderButton() {
+        WebElement orderBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("order-button")));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", orderBtn);
+        orderBtn.click();
+    }
+
+    // Nhấn "Quay về" trên trang MoMo
+    public void clickMomoBackButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement backButton = wait.until(ExpectedConditions.presenceOfElementLocated(By.id("backButton")));
+
+        // Scroll đến button nếu bị che khuất
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", backButton);
+
+        // Click bằng JS để tránh ElementClickInterceptedException
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", backButton);
+    }
+
+    // Nhấn "Hủy giao dịch" trong popup
+    public void clickCancelTransactionButton() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+        // Tìm nút theo text
+        WebElement cancelBtn = wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.xpath("//a[normalize-space()='HUỶ GIAO DỊCH']")));
+
+        // Scroll vào tầm nhìn nếu bị che
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", cancelBtn);
+
+        // Dùng JS để click an toàn
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", cancelBtn);
+    }
+
+    // Kiểm tra hiển thị text "Thanh toán thất bại"
+    public boolean isPaymentFailedMessageVisible() {
+        try {
+            WebElement msg = wait.until(ExpectedConditions.visibilityOfElementLocated(
+                    By.xpath("//*[contains(text(),'Thanh toán không thành công')]")));
+            return msg.isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
 }

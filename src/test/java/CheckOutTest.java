@@ -32,8 +32,8 @@ public class CheckOutTest {
         loginPage.login("0869738540", "123456");
         homePage = new HomePage(driver);
         restaurantPage = new RestaurantPage(driver);
-        //homePage.selectRestaurantByName("Urban Flavor");
-       // restaurantPage.addRandomFood();
+        homePage.selectRestaurantByName("Urban Flavor");
+        restaurantPage.addRandomFood();
         cartPage = new CartPage(driver);
         cartPage.clickCart();
         cartPage.checkout();
@@ -76,6 +76,21 @@ public class CheckOutTest {
 
         Assertions.assertTrue(checkoutPage.isSuccessDialogVisible(),
                 "Dialog đặt hàng thành công không hiển thị sau khi nhấn nút 'Đặt đơn'");
+    }
+
+    @Test
+    public void testMomoPayment() {
+        checkoutPage.selectMomoPaymentMethod();
+        checkoutPage.clickPlaceOrderButton();
+        Util.sleep(2);
+        checkoutPage.clickMomoBackButton();
+        Util.sleep(1);
+        checkoutPage.clickCancelTransactionButton();
+        Util.sleep(2);
+        Assertions.assertTrue(
+                checkoutPage.isPaymentFailedMessageVisible(),
+                "Thông báo thanh toán thất bại phải được hiển thị"
+        );
     }
     @AfterEach
     public void tearDown() {
