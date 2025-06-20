@@ -10,10 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class RestaurantPage {
     WebDriver driver;
     WebDriverWait wait;
+    private static final Logger logger = LoggerHelper.getLogger();
 
     public RestaurantPage(WebDriver driver) {
         this.driver = driver;
@@ -21,6 +23,7 @@ public class RestaurantPage {
     }
 
     public void addFoodToCart(String foodName, int quantity) {
+        logger.info("Adding "+ foodName +" with quantity "+ quantity +" to cart...");
         wait.until(ExpectedConditions.presenceOfElementLocated(
                 By.xpath("//h3[normalize-space(text())='" + foodName + "']")));
         WebElement plusBtn = driver.findElement(By.xpath("//button[contains(@class,'rounded-full') and text()='+']"));

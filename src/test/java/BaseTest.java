@@ -2,8 +2,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import page.Util;
 
 import java.time.Duration;
 
@@ -13,11 +13,7 @@ public class BaseTest {
 
     @BeforeEach
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "D:/PHUCLE/PJ/Test_order/chromedriver-win64/chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary("D:/PHUCLE/PJ/Test_order/chrome-win64/chrome.exe");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--no-sandbox", "--disable-gpu");
+        var options = Util.setup();
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }

@@ -8,10 +8,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.logging.Logger;
 
 public class HomePage {
     WebDriver driver;
     WebDriverWait wait;
+    private static final Logger logger = LoggerHelper.getLogger();
 
     public HomePage(WebDriver driver) {
         this.driver = driver;
@@ -19,6 +21,7 @@ public class HomePage {
     }
 
     public void selectFirstRestaurant() {
+        logger.info("Selecting first restaurant name: Urban Flavor");
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//h3[contains(text(),'Urban Flavor')]"))).click();
         wait.until(ExpectedConditions.urlToBe("http://localhost:3000/restaurant/7?lat=-1&lon=-1"));
     }

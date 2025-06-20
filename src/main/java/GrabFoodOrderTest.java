@@ -69,11 +69,7 @@ public class GrabFoodOrderTest {
     }
 
     private static void setup() {
-        System.setProperty("webdriver.chrome.driver", "D:/PHUCLE/PJ/Test_order/chromedriver-win64/chromedriver.exe");
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary("D:/PHUCLE/PJ/Test_order/chrome-win64/chrome.exe");
-        options.addArguments("--remote-allow-origins=*");
-        options.addArguments("--no-sandbox", "--disable-gpu");
+        var options = Util.setup();
         driver = new ChromeDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
     }

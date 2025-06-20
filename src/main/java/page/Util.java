@@ -1,12 +1,23 @@
 package page;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
 public class Util {
+
+    public static ChromeOptions setup() {
+        System.setProperty("webdriver.chrome.driver", "D:/PHUCLE/PJ/Test_order/chromedriver-win64/chromedriver.exe");
+        ChromeOptions options = new ChromeOptions();
+        options.setBinary("D:/PHUCLE/PJ/Test_order/chrome-win64/chrome.exe");
+        options.addArguments("--remote-allow-origins=*");
+        options.addArguments("--no-sandbox", "--disable-gpu");
+        return options;
+    }
+
     public static void ignoreAlert(WebDriver driver) {
         try {
             WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(2));

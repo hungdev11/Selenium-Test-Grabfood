@@ -22,11 +22,7 @@ public class RestaurantTest {
     static RestaurantPage restaurantPage;
     @BeforeEach
     public void setup() {
-        System.setProperty("webdriver.chrome.driver", "D:/PHUCLE/PJ/Test_order/chromedriver-win64/chromedriver.exe");
-
-        ChromeOptions options = new ChromeOptions();
-        options.setBinary("D:/PHUCLE/PJ/Test_order/chrome-win64/chrome.exe");
-        options.addArguments("--remote-allow-origins=*");
+        var options = Util.setup();
         driver = new ChromeDriver(options);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 

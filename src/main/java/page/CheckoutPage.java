@@ -8,11 +8,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.logging.Logger;
 
 public class CheckoutPage {
     WebDriver driver;
     WebDriverWait wait;
     AccountPage accountPage;
+    private static final Logger logger = LoggerHelper.getLogger();
+
     public CheckoutPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(2));
@@ -28,6 +31,7 @@ public class CheckoutPage {
     }
 
     public void fillAddress(String s) throws InterruptedException {
+        logger.info("Filling address value: " + s);
         Util.ignoreAlert(driver);
         var selectAddressButton = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//div[contains(text(),'+ Chọn địa chỉ giao hàng')]")));
@@ -64,6 +68,7 @@ public class CheckoutPage {
         var placeOrderButton = wait.until(ExpectedConditions.elementToBeClickable(
                 By.xpath("//button[contains(text(), 'Đặt đơn')]")));
         placeOrderButton.click();
+        logger.info("Placing order completed");
     }
 
     public boolean isShippingAddressNotSelected() {

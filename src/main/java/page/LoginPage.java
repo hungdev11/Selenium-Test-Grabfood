@@ -6,10 +6,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.logging.Logger;
 
 public class LoginPage {
     WebDriver driver;
     WebDriverWait wait;
+    private static final Logger logger = LoggerHelper.getLogger();
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
@@ -17,6 +19,7 @@ public class LoginPage {
     }
 
     public void login(String username, String password) {
+        logger.info("Login with username " + username + " and password " + password);
         driver.get("http://localhost:3000/login");
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("username"))).sendKeys(username);
         driver.findElement(By.id("password")).sendKeys(password);
