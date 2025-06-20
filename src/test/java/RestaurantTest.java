@@ -27,7 +27,7 @@ public class RestaurantTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
         loginPage = new LoginPage(driver);
-        loginPage.login("0869738540", "123456");
+        loginPage.login("011223344", "Ransomeware");
         homePage = new HomePage(driver);
         restaurantPage = new RestaurantPage(driver);
         wait = new WebDriverWait(driver, Duration.ofSeconds(2));
@@ -35,7 +35,7 @@ public class RestaurantTest {
 
     @Test
     public void testRestaurantHadFood() {
-        homePage.selectRestaurantByName("Urban Flavor");
+        homePage.selectRestaurantByName("0Urban Flavor");
         Util.sleep(1);
         assertTrue(restaurantPage.isRestaurantHadFood());
     }

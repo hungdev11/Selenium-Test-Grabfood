@@ -9,10 +9,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class CartPage {
     WebDriver driver;
     WebDriverWait wait;
+    private static final Logger logger = LoggerHelper.getLogger();
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
@@ -31,6 +33,15 @@ public class CartPage {
     public void checkout() {
         //driver.findElement(By.id("cart-button")).click();
         driver.findElement(By.id("checkout-button")).click();
+    }
+
+    public void checkoutAfterVerify()  {
+        logger.info("Clicking cart button...");
+        WebElement cartButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("cart-button")));
+        cartButton.click();
+        logger.info("Clicking checkout button...");
+        WebElement checkoutBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("checkout-button")));
+        checkoutBtn.click();
     }
 
     public boolean isCartEmpty() {

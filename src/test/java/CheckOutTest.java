@@ -29,7 +29,7 @@ public class CheckOutTest {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
 
         loginPage = new LoginPage(driver);
-        loginPage.login("0869738540", "123456");
+        loginPage.login("011223344", "Ransomeware");
         homePage = new HomePage(driver);
         restaurantPage = new RestaurantPage(driver);
         homePage.selectRestaurantByName("Urban Flavor");

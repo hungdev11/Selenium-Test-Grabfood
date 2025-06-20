@@ -11,8 +11,8 @@ public class OrderTest extends BaseTest {
         RestaurantPage restaurantPage = new RestaurantPage(driver);
         CartPage cartPage = new CartPage(driver);
         CheckoutPage checkoutPage = new CheckoutPage(driver);
-        loginPage.login("0869738540", "123456");
-        homePage.selectRestaurantByName("Urban Flavor");
+        loginPage.login("011223344", "Ransomeware");
+        homePage.selectRestaurantByName("0Urban Flavor");
         restaurantPage.addRandomFood();
         cartPage.checkout();
         // checkoutPage.isCheckoutPage();
