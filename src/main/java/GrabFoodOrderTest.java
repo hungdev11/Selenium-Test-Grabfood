@@ -37,7 +37,7 @@ public class GrabFoodOrderTest {
         logger.info("Start Happy Case Test : new user, success order");
         accessWebsite("http://localhost:3000");
 
-//        logger.info("Registering user...");
+        logger.info("Registering user...");
 //        registerPage.registerRandomUser();
 
         logger.info("Logging in...");
@@ -47,10 +47,10 @@ public class GrabFoodOrderTest {
         homePage.selectFirstRestaurant();
 
         logger.info("Adding item to cart...");
-        restaurantPage.addFoodToCart("Banh xeo tôm", 1);
+        restaurantPage.addFoodToCart("Phở bò", 3);
 
         logger.info("Verifying cart quantity...");
-        cartPage.verifyQuantity("Banh xeo trung", 1);
+        cartPage.verifyQuantity("Phở bò", 3);
 
         logger.info("Proceeding to checkout...");
         cartPage.checkout();

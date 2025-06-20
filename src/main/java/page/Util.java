@@ -10,11 +10,12 @@ import java.time.Duration;
 public class Util {
 
     public static ChromeOptions setup() {
-        System.setProperty("webdriver.chrome.driver", "D:/PHUCLE/PJ/Test_order/chromedriver-win64/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "E:/chromedriver-win64/chromedriver-win64/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("D:/PHUCLE/PJ/Test_order/chrome-win64/chrome.exe");
+        options.setBinary("E:/chrome-win64/chrome-win64/chrome.exe");
         options.addArguments("--remote-allow-origins=*");
         options.addArguments("--no-sandbox", "--disable-gpu");
+        options.addArguments("start-maximized");
         return options;
     }
 

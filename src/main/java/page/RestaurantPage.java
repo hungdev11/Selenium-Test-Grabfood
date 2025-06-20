@@ -23,14 +23,20 @@ public class RestaurantPage {
     }
 
     public void addFoodToCart(String foodName, int quantity) {
-        logger.info("Adding "+ foodName +" with quantity "+ quantity +" to cart...");
-        wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.xpath("//h3[normalize-space(text())='" + foodName + "']")));
-        WebElement plusBtn = driver.findElement(By.xpath("//button[contains(@class,'rounded-full') and text()='+']"));
-        for (int i = 0; i < quantity; i++) {
-            wait.until(ExpectedConditions.elementToBeClickable(plusBtn)).click();
+        logger.info("Adding " + foodName + " with quantity " + quantity + " to cart...");
+        // Click vào tên món ăn
+        wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//h3[normalize-space(text())='" + foodName + "']"))).click();
+        // Click + button (quantity - 1) lần
+        for (int i = 1; i < quantity; i++) {
+            WebElement plusBtn = wait.until(ExpectedConditions.elementToBeClickable(
+                    By.xpath("//div[@class='flex items-center gap-2']/button[2]")));
+            plusBtn.click();
         }
-        driver.findElement(By.xpath("//button[contains(text(),'Add to basket')]")).click();
+        // Click "Add to basket"
+        WebElement addToBasket = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//button[contains(text(),'Add to basket')]")));
+        addToBasket.click();
     }
 
     public boolean isRestaurantHadFood() {
