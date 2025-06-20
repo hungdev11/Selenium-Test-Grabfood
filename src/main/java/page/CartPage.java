@@ -29,7 +29,7 @@ public class CartPage {
     }
 
     public void checkout() {
-        driver.findElement(By.id("cart-button")).click();
+        //driver.findElement(By.id("cart-button")).click();
         driver.findElement(By.id("checkout-button")).click();
     }
 

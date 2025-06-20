@@ -1,13 +1,12 @@
 package page;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class CheckoutPage {
@@ -97,6 +96,98 @@ public class CheckoutPage {
         Util.ignoreAlert(driver);
         if (isShippingAddressNotSelected()) {
             fillAddress(address);
+        }
+    }
+
+    // Hàm parse dùng chung
+    private int parseCurrency(String raw) {
+        if (raw == null || raw.isEmpty()) return 0;
+        return Integer.parseInt(raw.replace(".", "").replace(",", "").replace("đ", "").replace("-", "").trim());
+    }
+
+    // Lấy danh sách giá từng sản phẩm
+    public List<Integer> getItemPrices() {
+        List<WebElement> priceElements = driver.findElements(By.cssSelector(".text-base.font-semibold"));
+        List<Integer> prices = new ArrayList<>();
+        for (WebElement el : priceElements) {
+            try {
+                prices.add(parseCurrency(el.getText()));
+            } catch (NumberFormatException e) {
+                System.out.println("Lỗi chuyển đổi giá sản phẩm: " + el.getText());
+            }
+        }
+        return prices;
+    }
+
+    // Lấy phí vận chuyển
+    public int getDeliveryFee() {
+        try {
+            WebElement feeEl = driver.findElement(By.xpath("//span[contains(text(),'Phí vận chuyển')]/following-sibling::span"));
+            return parseCurrency(feeEl.getText());
+        } catch (Exception e) {
+            System.out.println("Không tìm thấy phí vận chuyển.");
+            return 0;
+        }
+    }
+
+    // Lấy tổng cộng hiển thị dưới cùng
+    public int getDisplayedTotal() {
+        try {
+            WebElement totalEl = driver.findElement(By.cssSelector("div.fixed div p.text-sm.text-gray-500"));
+            String totalText = totalEl.getText().split("đ")[0];
+            return parseCurrency(totalText);
+        } catch (Exception e) {
+            System.out.println("Không tìm thấy tổng tiền hiển thị.");
+            return 0;
+        }
+    }
+
+    // Nhập mã voucher
+    public void enterVoucherCode(String code) {
+        WebElement voucherInput = driver.findElement(By.cssSelector("input[placeholder*='Nhập mã khuyến mãi']"));
+        voucherInput.clear();
+        voucherInput.sendKeys(code);
+    }
+
+    // Nhấn nút Áp dụng
+    public void clickApplyVoucher() {
+        WebElement applyButton = driver.findElement(By.xpath("//button[contains(text(),'Áp dụng')]"));
+
+        // Scroll vào vùng nhìn thấy
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", applyButton);
+
+        // Chờ 1 chút (nếu cần)
+        try { Thread.sleep(500); } catch (InterruptedException ignored) {}
+
+        applyButton.click();
+    }
+
+    // Lấy text thông báo lỗi voucher (nếu có)
+    public String getVoucherErrorMessage() {
+        try {
+            WebElement errorText = driver.findElement(By.xpath("//p[contains(text(),'Mã voucher') or contains(text(),'Vui lòng')]"));
+            return errorText.getText().trim();
+        } catch (NoSuchElementException e) {
+            return null;
+        }
+    }
+
+    public void clickOrderButton() {
+        WebElement orderBtn = driver.findElement(By.id("order-button"));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", orderBtn);
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.elementToBeClickable(orderBtn))
+                .click();
+    }
+
+    public boolean isSuccessDialogVisible() {
+        try {
+            WebElement dialog = new WebDriverWait(driver, Duration.ofSeconds(5))
+                    .until(ExpectedConditions.visibilityOfElementLocated(
+                            By.xpath("//h2[contains(text(),'Đặt hàng thành công!')]")));
+            return dialog.isDisplayed();
+        } catch (TimeoutException e) {
+            return false;
         }
     }
 }
