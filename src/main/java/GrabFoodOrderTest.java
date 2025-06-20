@@ -53,7 +53,7 @@ public class GrabFoodOrderTest {
         cartPage.verifyQuantity("Phở bò", 3);
 
         logger.info("Proceeding to checkout...");
-        cartPage.checkout();
+        cartPage.checkoutAfterVerify();
         Util.ignoreAlert(driver);
 
         logger.info("Filling address...");
