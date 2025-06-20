@@ -30,6 +30,16 @@ public class RestaurantPage {
         driver.findElement(By.xpath("//button[contains(text(),'Add to basket')]")).click();
     }
 
+    public boolean isRestaurantHadFood() {
+        try {
+            List<WebElement> foodItems = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
+                    By.cssSelector("div.flex.items-center.p-4.border")));
+            return !foodItems.isEmpty();
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void addRandomFood() {
         List<WebElement> foodItems = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(
                 By.cssSelector("div.flex.items-center.p-4.border")));
