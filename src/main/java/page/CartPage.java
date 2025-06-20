@@ -9,12 +9,10 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class CartPage {
     WebDriver driver;
     WebDriverWait wait;
-    private static final Logger logger = LoggerHelper.getLogger();
 
     public CartPage(WebDriver driver) {
         this.driver = driver;
@@ -28,16 +26,11 @@ public class CartPage {
         if (!qty.getText().equals(String.valueOf(expectedQty))) {
             throw new AssertionError("Expected quantity: " + expectedQty + " but found: " + qty.getText());
         }
-        driver.findElement(By.id("cart-button")).click();
     }
 
-    public void checkout()  {
-        logger.info("Clicking cart button...");
-        WebElement cartButton = wait.until(ExpectedConditions.elementToBeClickable(By.id("cart-button")));
-        cartButton.click();
-        logger.info("Clicking checkout button...");
-        WebElement checkoutBtn = wait.until(ExpectedConditions.elementToBeClickable(By.id("checkout-button")));
-        checkoutBtn.click();
+    public void checkout() {
+        //driver.findElement(By.id("cart-button")).click();
+        driver.findElement(By.id("checkout-button")).click();
     }
 
     public boolean isCartEmpty() {
